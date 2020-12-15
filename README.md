@@ -101,3 +101,7 @@ localhost:8002/docs
 ## Licencia 📄
 
 Este proyecto está bajo la Licencia MIT license - mira el archivo [LICENSE.md](LICENSE) para detalles
+
+
+##Nota:
+Se crea la rama prueba para que sea evaluada como parte de la prueba técnica, en esta rama no se generaran actualizaciones
