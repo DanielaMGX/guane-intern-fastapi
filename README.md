@@ -100,4 +100,4 @@ localhost:8002/docs
 
 ## Licencia 📄
 
-Este proyecto está bajo la Licencia MIT license - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+Este proyecto está bajo la Licencia MIT license - mira el archivo [LICENSE.md](LICENSE) para detalles
