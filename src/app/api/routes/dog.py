@@ -8,12 +8,18 @@ from fastapi import APIRouter, HTTPException, Path
 router = APIRouter()
 
 
-@router.post("/",response_model=DogDB, status_code=201)
-async def create_dog(payload: DogSchema):
-    dog_id = await crud.post(payload)
+@router.post("/{name}",response_model=DogDB, status_code=201)
+async def create_dog(payload: DogSchema, name: str = Path(...)):
+    dog_exist_id = await crud.get_by_id(payload.id)
+    dog_exist_name = await crud.get(name)
+    if dog_exist_id:
+        raise HTTPException(status_code=409, detail="id already exists")
+    if dog_exist_name:
+        raise HTTPException(status_code=409, detail="name already exists")
+    dog_id = await crud.post(name, payload)
     response_object = {
         "id": payload.id,
-        "name": payload.name,
+        "name": name,
         "is_adopted": payload.is_adopted,
 
     }
@@ -41,12 +47,7 @@ async def update_dog(payload: DogSchema, name: str = Path(..., min_length=1),):
 
     dog_id = await crud.put(name, payload)
 
-    response_object = {
-        "id": payload.id,
-        "name": payload.name,
-        "is_adopted": payload.is_adopted,
-    }
-    return response_object
+    return dog
 
 
 @router.delete("/{name}/", response_model=DogDB)
