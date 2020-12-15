@@ -21,5 +21,14 @@ dog = Table(
     Column("created_date", DateTime, default=func.now(), nullable=False),
 )
 
+user = Table(
+    "user",
+    metadata,
+    Column("id", Integer, primary_key=True),
+    Column("first_name", String()),
+    Column("last_name", String()),
+    Column("email", String()),
+    Column("created_date", DateTime, default=func.now(), nullable=False),
+)
 # databases query builder
 database = Database(DATABASE_URL)

@@ -1,5 +1,5 @@
 from app.models.models import DogSchema
-from app.db.db import dog, database
+from app.db.db import user, dog, database
 import app.functions as fun
 
 async def post(name: str, payload: DogSchema):
@@ -17,6 +17,10 @@ async def get(name: str):
 
 async def get_by_id(id: str):
     query = dog.select().where(id == dog.c.id)
+    return await database.fetch_one(query=query)
+
+async def get_is_adopted():
+    query = dog.select().where(True == dog.c.is_adopted)
     return await database.fetch_one(query=query)
 
 async def get_all():
