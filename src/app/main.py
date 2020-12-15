@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.api import dog, ping
+from app.api.routes import dog
 from app.db.db import engine, metadata, database
 
 metadata.create_all(engine)
@@ -18,5 +18,4 @@ async def shutdown():
     await database.disconnect()
 
 
-app.include_router(ping.router)
-app.include_router(dog.router, prefix="/dog", tags=["dog"])
+app.include_router(dog.router, prefix="/dogs", tags=["dogs"])

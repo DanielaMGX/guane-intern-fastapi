@@ -15,7 +15,7 @@ dog = Table(
     "dog",
     metadata,
     Column("id", String, primary_key=True),
-    Column("name", String()),
+    Column("name", String(), unique=True),
     Column("picture", String()),
     Column("is_adopted", Boolean()),
     Column("created_date", DateTime, default=func.now(), nullable=False),
