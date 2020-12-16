@@ -1,5 +1,6 @@
 from app.models.models import DogSchema
 from app.db.db import user, dog, database
+from app.api.crud import user_crud
 import app.functions as fun
 
 async def post(name: str, payload: DogSchema):
@@ -8,7 +9,7 @@ async def post(name: str, payload: DogSchema):
                                 id=payload.id,
                                 name=name,
                                 picture=picture, 
-                                is_adopted=payload.is_adopted)
+                                is_adopted=False)
     return await database.execute(query=query)
 
 async def get(name: str):
@@ -46,3 +47,15 @@ async def delete(name: str):
     query = dog.delete().where(name == dog.c.name)
     return await database.execute(query=query)
 
+
+async def adopt_dog(payload):
+        query = (
+        dog
+        .update()
+        .where(payload.dog_name == dog.c.name)
+        .values(id=dog.c.id ,name=dog.c.name, 
+                is_adopted=True, picture=dog.c.picture, 
+                created_date=dog.c.created_date, user_id=payload.user_id )
+        .returning(dog.c.name)
+    )
+        return await database.execute(query=query)

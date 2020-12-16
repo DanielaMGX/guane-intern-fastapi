@@ -1,9 +1,8 @@
 import os
 
 from sqlalchemy import (Column, DateTime, Integer, Boolean,
-                        String, Table, MetaData, create_engine)
+                        String, Table, MetaData, create_engine,ForeignKey)
 from sqlalchemy.sql import func
-
 from databases import Database
 
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -17,8 +16,10 @@ dog = Table(
     Column("id", String(), primary_key=True),
     Column("name", String(), unique=True),
     Column("picture", String()),
-    Column("is_adopted", Boolean()),
+    Column("is_adopted", Boolean(), default=False),
     Column("created_date", DateTime, default=func.now(), nullable=False),
+    Column("user_id", Integer, ForeignKey("user.id"), nullable=True)
+
 )
 
 user = Table(
