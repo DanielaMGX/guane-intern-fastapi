@@ -1,5 +1,5 @@
 from app.models.models import UserSchema
-from app.db.db import user, user, database
+from app.db.db import user, user, database, dog
 
 async def post(payload: UserSchema):
     query = user.insert().values(
@@ -37,3 +37,8 @@ async def put(id: int, payload: UserSchema):
 async def delete(id: int):
     query = user.delete().where(id == user.c.id)
     return await database.execute(query=query)
+
+
+async def get_adopted_dogs(id: int):
+    query = dog.select().where(dog.c.user_id == id )
+    return await database.fetch_all(query=query)

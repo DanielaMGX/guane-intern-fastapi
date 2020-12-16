@@ -2,7 +2,7 @@ import re
 from typing import List
 
 from app.api.crud import user_crud
-from app.models.models import UserSchema, UserDB
+from app.models.models import UserSchema, UserDB, DogDB
 from fastapi import APIRouter, HTTPException, Path
 
 
@@ -68,3 +68,11 @@ async def delete_user(id: int = Path(..., gt=0)):
     await user_crud.delete(id)
 
     return user
+
+@router.get("/get_adopted/{id}/", response_model=List[DogDB])
+async def get_adopted_dogs(id: int = Path(..., gt=0),):
+    user = await user_crud.get_by_id(id)
+    if not user:
+        raise HTTPException(status_code=404, detail="user not found")
+    
+    return await user_crud.get_adopted_dogs(id)
