@@ -33,11 +33,11 @@ async def read_dog(name: str = Path(..., min_length=1),):
         raise HTTPException(status_code=404, detail="dog not found")
     return dog
 
-@router.get("/is_adopted", response_model=DogDB)
+@router.get("/is_adopted", response_model=List[DogDB])
 async def read_dog():
     dog = await dog_crud.get_is_adopted()
     if not dog:
-        raise HTTPException(status_code=404, detail="dog not found")
+        raise HTTPException(status_code=404, detail="there are no adopted dogs")
     return dog
 
 @router.put("/{name}/", response_model=DogSchema)
@@ -70,6 +70,6 @@ async def update_dog(payload: AdoptSchema):
     elif not user_exist_id:
         raise HTTPException(status_code=404, detail="user not found")
     else:
-        dog_id = await dog_crud.adopt_dog(payload)
+        await dog_crud.adopt_dog(payload)
     new_dog = await dog_crud.get(payload.dog_name)
     return new_dog
