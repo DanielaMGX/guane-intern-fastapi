@@ -10,7 +10,7 @@ _Estas instrucciones te permitirán obtener una copia del proyecto en funcionami
 
 ### Pre-requisitos 📋
 
-_se necesita Postgresql y Docker_
+_se necesitay Docker_
 
 _Docker_:
 
